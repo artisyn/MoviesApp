@@ -1,0 +1,23 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+:root {
+	--diameter: 350px;
+	--numberOfSlices: 12;
+	--radius: calc(var(--diameter) / 2);
+	--circumfrance: calc(6.283185307 * var(--radius));
+	--sliceHeight: calc(var(--circumfrance) / var(--numberOfSlices));
+	--sliceOffeset: calc(var(--sliceHeight) / 2);
+	--sliceColor: rgba(95, 59, 161, 0.267);
+	--rotation: calc(360deg / var(--numberOfSlices));
+}
