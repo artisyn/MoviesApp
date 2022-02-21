@@ -21,3 +21,8 @@ body {
 	--sliceColor: rgba(95, 59, 161, 0.267);
 	--rotation: calc(360deg / var(--numberOfSlices));
 }
+
+.image {
+	width: 500px;
+	height: 500px;
+}

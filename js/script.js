@@ -1,4 +1,5 @@
 'use strict';
+const testImg = document.querySelector('.image');
 const API_KEY = '81b5ac86648fd04fe0a5696982f88fc4';
 
 // Movie db functions
@@ -51,10 +52,10 @@ const popularMovies = async () => {
   console.log(c);
 };
 
-const topRated = async (type, pageNumber) => {
+const genres = async (type) => {
   try {
     const x = await fetch(
-      `https://api.themoviedb.org/3/${type}/top_rated?api_key=81b5ac86648fd04fe0a5696982f88fc4&language=en-US&page=${pageNumber}`
+      `https://api.themoviedb.org/3/genre/${type}/list?api_key=${API_KEY}`
     );
 
     console.log(x);
@@ -64,16 +65,19 @@ const topRated = async (type, pageNumber) => {
     console.log(error);
   }
 };
-
-const genres = async (type) => {
+const searchByGenres = async (type, genreId) => {
   try {
     const x = await fetch(
-      `https://api.themoviedb.org/3/genre/${type}/list?api_key=${API_KEY}&with_genres=27`
+      `https://api.themoviedb.org/3/discover/${type}?api_key=${API_KEY}&with_genres=${genreId}`
     );
 
     console.log(x);
     const c = await x.json();
     console.log(c);
+
+    testImg.style.backgroundImage = `url(${getPoster(
+      c.results[0].poster_path
+    )})`;
   } catch (error) {
     console.log(error);
   }
@@ -85,4 +89,5 @@ const genres = async (type) => {
 // searchRequest('tv', 'diaries', 2);
 
 // topRated('movie', 2);
-genres();
+// genres('movie');
+searchByGenres('movie', 36);
