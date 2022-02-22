@@ -3,26 +3,117 @@
 *::after {
 	box-sizing: border-box;
 }
+:root {
+}
 
 body {
+	margin: 0;
 	min-height: 100vh;
+	background-color: #4834d4;
+	background-image: linear-gradient(315deg, #4834d4 0%, #0c0c0c 74%);
+}
+
+/* navigation */
+.search__bar {
+	padding: 0.3rem;
+	position: sticky;
+	top: 0;
+	height: 5rem;
+	border: 2px solid white;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	background-color: antiquewhite;
+	z-index: 100;
+}
+.logo {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	overflow: hidden;
+	height: 4rem;
+	width: 4rem;
+	border-radius: 0.3rem;
+
+	/* border: 1px solid white; */
+	padding: 1rem;
+	background-color: #3b3468;
+}
+.logo > img {
+	max-width: 100%;
 }
 
-:root {
-	--diameter: 350px;
-	--numberOfSlices: 12;
-	--radius: calc(var(--diameter) / 2);
-	--circumfrance: calc(6.283185307 * var(--radius));
-	--sliceHeight: calc(var(--circumfrance) / var(--numberOfSlices));
-	--sliceOffeset: calc(var(--sliceHeight) / 2);
-	--sliceColor: rgba(95, 59, 161, 0.267);
-	--rotation: calc(360deg / var(--numberOfSlices));
+.left__nav {
+	float: left;
+	padding: 5rem 0.3rem 0.3rem 0.3rem;
+	display: flex;
+	justify-content: center;
+	width: 5rem;
+	height: 100vh;
+	position: sticky;
+	bottom: 0;
+	border: 2px solid white;
+	margin-right: 1rem;
+	background-color: antiquewhite;
 }
 
+.nav__items {
+	border: 1px solid orange;
+	width: 100%;
+	background-color: lightblue;
+}
+.main__container {
+	min-height: 33rem;
+	background-color: lavender;
+}
 .image {
 	width: 500px;
 	height: 500px;
+}
+/* general styles */
+.display__none {
+	display: none;
+}
+.no__opacity {
+	opacity: 0;
+}
+
+/*  spinner */
+
+.loading__spinner {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	width: 100px;
+	height: 100px;
+}
+
+.loading__spinner div {
+	background-color: white;
+	width: 20px;
+	height: 20px;
+	border-radius: 100%;
+	animation: bounce 0.5s cubic-bezier(0.19, 0.57, 0.3, 0.98) infinite
+		alternate;
+}
+.loading__spinner :nth-child(2) {
+	animation-delay: 0.1s;
+	opacity: 0.8;
+}
+.loading__spinner :nth-child(3) {
+	animation-delay: 0.2s;
+	opacity: 0.6;
+}
+.loading__spinner :nth-child(4) {
+	animation-delay: 0.3s;
+	opacity: 0.4;
+}
+
+@keyframes bounce {
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(-100px);
+	}
 }

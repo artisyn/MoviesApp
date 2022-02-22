@@ -1,4 +1,5 @@
 'use strict';
+const API_KEY = '81b5ac86648fd04fe0a5696982f88fc4';
 
 // requesting genres by type tv or movie;
 
@@ -83,4 +84,13 @@ const getPoster = (url, width = 500) => {
   // poster with 500 width; + path;
 
   return `https://image.tmdb.org/t/p/w${width}${url}`;
+};
+
+export {
+  getPoster,
+  searchByGenres,
+  searchTrending,
+  searchByValue,
+  SearchTopRated,
+  listOfGenres,
 };
