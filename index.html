@@ -4,33 +4,62 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@400;700&display=swap"
+			rel="stylesheet"
+		/>
+		<script
+			src="https://kit.fontawesome.com/9588a8c772.js"
+			crossorigin="anonymous"
+		></script>
 		<link rel="stylesheet" href="./css/style.css" />
 		<script src="./js/script.js" defer type="module"></script>
-		<title>Template</title>
+		<title>Movie App</title>
 	</head>
 	<body>
 		<div class="app__container">
-			<div class="search__bar">
-				<div class="logo"><img src="./images/logo.svg" alt="logo"></div>
+			<div class="top__bar">
+				<div class="logo">
+					<img src="./images/logo.svg" alt="logo" />
+				</div>
+				<div class="search__container">
+					<label for="search__check" class="search__label">
+						<input type="checkbox" id="search__check" />
+						<div class="search__input">
+							<div class="search__logo">
+								<img
+									src="./images/searchLogo.svg"
+									alt="magnifying-glass"
+								/>
+							</div>
+						</div>
+					</label>
+					<input
+						type="text"
+						class="input__text no__opacity no__click"
+					/>
+				</div>
 			</div>
 			<nav class="left__nav">
-				
 				<div class="nav__items">
-					<div class="ul"></div>
+					<ul>
+						<li>One</li>
+						<li>Two</li>
+						<li>Three</li>
+						<li>Four</li>
+					</ul>
 				</div>
-				
 			</nav>
 
-
-
-
-
 			<div class="main__container">
-				
+				<div class="title">
+					<h1>Premium Streaming</h1>
+				</div>
 				<div class="main__content"></div>
-
 			</div>
-			
 		</div>
 	</body>
-</htmnav
+	<!-- <div class="spinner"><img src="./images/aplusLogo.svg" alt="spinner"></div> -->
+</html>
