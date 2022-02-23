@@ -94,7 +94,7 @@ body {
 
 .left__nav {
 	float: left;
-	padding: 5rem 0.3rem 0.3rem 0.3rem;
+	padding-top: 5rem;
 	display: flex;
 	justify-content: center;
 	width: 5rem;
@@ -102,11 +102,15 @@ body {
 	position: sticky;
 	bottom: 0;
 	background-color: var(--color-1);
+	z-index: 90;
 }
 
 .nav__items {
+	position: relative;
 	width: 100%;
 	padding-top: 2rem;
+	background-color: var(--color-1);
+	z-index: 70;
 }
 ul {
 	display: flex;
@@ -120,7 +124,6 @@ ul {
 }
 ul li {
 	cursor: pointer;
-
 	width: 3.5rem;
 	height: 3.5rem;
 	display: flex;
@@ -128,9 +131,43 @@ ul li {
 	justify-content: center;
 	border-radius: 0.3rem;
 	transition: all ease 0.3s;
+	font-size: 1.5rem;
+	color: var(--color-white);
+	position: relative;
 }
 ul li:hover {
 	background-color: var(--color-2);
+}
+
+.trends:hover::before {
+	content: 'Trending';
+	position: absolute;
+	color: white;
+	font-size: 0.6rem;
+	top: -1rem;
+	right: -0.7rem;
+}
+.film__tv:hover::before {
+	content: 'Tv/Movie';
+	position: absolute;
+	color: white;
+	font-size: 0.6rem;
+	top: -1rem;
+	right: -0.7rem;
+}
+#movie__checkbox {
+	display: none;
+}
+
+.sliding__menu {
+	border: 1px solid white;
+	width: 10rem;
+	height: 30rem;
+	position: absolute;
+	transition: all ease-in 0.24s;
+	right: -10rem;
+	z-index: -1;
+	background-color: #c5c5c5;
 }
 .main__container {
 	min-height: 33rem;
@@ -154,6 +191,10 @@ ul li:hover {
 }
 .no__click {
 	pointer-events: none;
+}
+.slide__left {
+	/* transform: translateX(-15rem); */
+	right: 0;
 }
 
 /*  spinner */
