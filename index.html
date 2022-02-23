@@ -7,7 +7,7 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@400;700&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&family=Rokkitt:wght@400;700&display=swap"
 			rel="stylesheet"
 		/>
 		<script
@@ -54,14 +54,134 @@
 								<i class="fas fa-film"></i>
 							</li>
 						</label>
-						<li>Three</li>
-						<li>Four</li>
+						<li><i class="fas fa-star"></i></li>
+						<li><i class="fas fa-angle-down"></i></li>
 					</ul>
 				</div>
+				<!-- slide__left -->
+				<div class="sliding__menu">
+					<form action="">
+						<div class="media__container">
+							<h2 class="media__title">Search for:</h2>
+							<div class="media__type">
+								<label for="type__movie">
+									<input
+										type="radio"
+										name="media"
+										id="type__movie"
+										checked
+									/>
+									<div class="media__movie">MOVIE</div></label
+								>
 
-				<div class="sliding__menu slide__left"><h2>test</h2></div>
+								<label for="type__tv">
+									<input
+										type="radio"
+										name="media"
+										id="type__tv"
+									/>
+									<div class="media__tv">TV</div></label
+								>
+							</div>
+						</div>
+						<h2 class="genres__title">Genres</h2>
+						<div class="genres__container">
+							<label class="genre__label" for="genre">
+								<input
+									class="genre__input"
+									type="checkbox"
+									id="genre"
+								/>
+								<div class="genre__container">
+									<span class="genre__name">ACTION</span>
+									<span class="genre__icon-check"
+										><i class="fas fa-check"></i
+									></span>
+									<span class="genre__icon-close"
+										><i class="fas fa-times"></i
+									></span>
+								</div>
+							</label>
+							<label class="genre__label" for="genr">
+								<input
+									class="genre__input"
+									type="checkbox"
+									id="genr"
+								/>
+								<div class="genre__container">
+									<span class="genre__name">ACTION</span>
+									<span class="genre__icon-check"
+										><i class="fas fa-check"></i
+									></span>
+									<span class="genre__icon-close"
+										><i class="fas fa-times"></i
+									></span>
+								</div>
+							</label>
+							<label class="genre__label" for="gen">
+								<input
+									class="genre__input"
+									type="checkbox"
+									id="gen"
+								/>
+								<div class="genre__container">
+									<span class="genre__name">ACTION</span>
+									<span class="genre__icon-check"
+										><i class="fas fa-check"></i
+									></span>
+									<span class="genre__icon-close"
+										><i class="fas fa-times"></i
+									></span>
+								</div>
+							</label>
+							<label class="genre__label" for="ge">
+								<input
+									class="genre__input"
+									type="checkbox"
+									id="ge"
+								/>
+								<div class="genre__container">
+									<span class="genre__name">ACTION</span>
+									<span class="genre__icon-check"
+										><i class="fas fa-check"></i
+									></span>
+									<span class="genre__icon-close"
+										><i class="fas fa-times"></i
+									></span>
+								</div>
+							</label>
+							<label class="genre__label" for="g">
+								<input
+									class="genre__input"
+									type="checkbox"
+									id="g"
+								/>
+								<div class="genre__container">
+									<span class="genre__name">ACTION</span>
+									<span class="genre__icon-check"
+										><i class="fas fa-check"></i
+									></span>
+									<span class="genre__icon-close"
+										><i class="fas fa-times"></i
+									></span>
+								</div>
+							</label>
+						</div>
+						<h2 class="rating__title">RATING</h2>
+						<div class="rating__container">
+							<div class="range__name">
+								IMDB <span class="imdb__value">6.6</span>
+							</div>
+							<input type="range" id="" />
+						</div>
+						<div class="show__container">
+							<button class="btn__show" type="submit">
+								Show
+							</button>
+						</div>
+					</form>
+				</div>
 			</nav>
-
 			<div class="main__container">
 				<div class="title">
 					<h1>Premium Streaming</h1>
