@@ -16,6 +16,8 @@ const genresContainer = document.querySelector('.genres__container');
 const mediaTypeChange = document.querySelectorAll('.media__radio');
 const trendingBtn = document.querySelector('.trends');
 const cardContainer = document.querySelector('.card__container');
+const selectedCard = document.querySelector('.selected__card');
+const selectedCardClose = document.querySelector('.selected__card--close');
 
 const wait = (seconds) => {
   return new Promise((resolve) => {
@@ -36,6 +38,10 @@ slidingCheck.addEventListener('change', () => {
 
 imdbRange.addEventListener('change', () => {
   imdbDisplay.innerText = imdbRange.value;
+});
+
+selectedCardClose.addEventListener('click', () => {
+  selectedCard.classList.add('display__none');
 });
 
 // Sidebar functions
@@ -170,6 +176,9 @@ const convertResultsToCards = (result) => {
   cardContainer.insertAdjacentHTML('beforeend', markup);
 };
 
+// click to expand
+// continue with card
+
 const showTrending = async () => {
   const { results } = await Request.searchTrending();
   console.log(results);
@@ -180,5 +189,3 @@ const showTrending = async () => {
 
 // click trending
 trendingBtn.addEventListener('click', showTrending);
-
-//https:image.tmdb.org/t/p/w500/2CAL2433ZeIihfX1Hb2139CX0pW.jpg
