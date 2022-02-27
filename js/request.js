@@ -8,10 +8,13 @@ const listOfGenres = async (type) => {
     const x = await fetch(
       `https://api.themoviedb.org/3/genre/${type}/list?api_key=${API_KEY}`
     );
-
+    if (!x.ok) throw new Error('Bad url, please try again 📛');
+    if (x.status === 404) throw new Error('Page not found ❌');
     console.log(x);
     const c = await x.json();
+
     console.log(c);
+    return c;
   } catch (error) {
     console.log(error);
   }
@@ -23,7 +26,8 @@ const SearchTopRated = async (type, pageNumber) => {
     const x = await fetch(
       `https://api.themoviedb.org/3/${type}/top_rated?&api_key=${API_KEY}&language=en-US&page=${pageNumber}`
     );
-
+    if (!x.ok) throw new Error('Bad url, please try again 📛');
+    if (x.status === 404) throw new Error('Page not found ❌');
     console.log(x);
     const c = await x.json();
     console.log(c);
@@ -39,7 +43,8 @@ const searchByValue = async (type, searchVal, pageNumber = 1) => {
     const x = await fetch(
       `https://api.themoviedb.org/3/search/${type}?query=${searchVal}&api_key=${API_KEY}&page=${pageNumber}`
     );
-
+    if (!x.ok) throw new Error('Bad url, please try again 📛');
+    if (x.status === 404) throw new Error('Page not found ❌');
     console.log(x);
     const c = await x.json();
     console.log(c);
@@ -55,7 +60,8 @@ const searchTrending = async (type, period) => {
     const x = await fetch(
       `https://api.themoviedb.org/3/trending/${type}/${period}?api_key=${API_KEY}`
     );
-
+    if (!x.ok) throw new Error('Bad url, please try again 📛');
+    if (x.status === 404) throw new Error('Page not found ❌');
     console.log(x);
     const c = await x.json();
     console.log(c);
@@ -70,7 +76,8 @@ const searchByGenres = async (type, genreId) => {
     const x = await fetch(
       `https://api.themoviedb.org/3/discover/${type}?api_key=${API_KEY}&with_genres=${genreId}`
     );
-
+    if (!x.ok) throw new Error('Bad url, please try again 📛');
+    if (x.status === 404) throw new Error('Page not found ❌');
     console.log(x);
     const c = await x.json();
     console.log(c);

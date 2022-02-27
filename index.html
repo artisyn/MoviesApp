@@ -30,7 +30,7 @@
 						<div class="search__input">
 							<div class="search__logo">
 								<img
-									src="./images/searchLogo.svg"
+									src="./images/searchLogo2.svg"
 									alt="magnifying-glass"
 								/>
 							</div>
@@ -39,6 +39,7 @@
 					<input
 						type="text"
 						class="input__text no__opacity no__click"
+						placeholder="Search for Movies, Tv, etc."
 					/>
 				</div>
 			</div>
@@ -66,9 +67,11 @@
 							<div class="media__type">
 								<label for="type__movie">
 									<input
+										class="media__radio"
 										type="radio"
 										name="media"
 										id="type__movie"
+										data-media="movie"
 										checked
 									/>
 									<div class="media__movie">MOVIE</div></label
@@ -76,9 +79,11 @@
 
 								<label for="type__tv">
 									<input
+										class="media__radio"
 										type="radio"
 										name="media"
 										id="type__tv"
+										data-media="tv"
 									/>
 									<div class="media__tv">TV</div></label
 								>
@@ -86,7 +91,7 @@
 						</div>
 						<h2 class="genres__title">Genres</h2>
 						<div class="genres__container">
-							<label class="genre__label" for="genre">
+							<!-- <label class="genre__label" for="genre">
 								<input
 									class="genre__input"
 									type="checkbox"
@@ -165,14 +170,20 @@
 										><i class="fas fa-times"></i
 									></span>
 								</div>
-							</label>
+							</label> -->
 						</div>
 						<h2 class="rating__title">RATING</h2>
 						<div class="rating__container">
 							<div class="range__name">
-								IMDB <span class="imdb__value">6.6</span>
+								IMDB min <span class="imdb__value">5.5</span>
 							</div>
-							<input type="range" id="" />
+							<input
+								type="range"
+								id="imdb__range"
+								min="1"
+								max="10"
+								step=".1"
+							/>
 						</div>
 						<div class="show__container">
 							<button class="btn__show" type="submit">
