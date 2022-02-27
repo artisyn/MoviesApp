@@ -14,6 +14,8 @@ const imdbDisplay = document.querySelector('.imdb__value');
 const btnShow = document.querySelector('.btn__show');
 const genresContainer = document.querySelector('.genres__container');
 const mediaTypeChange = document.querySelectorAll('.media__radio');
+const trendingBtn = document.querySelector('.trends');
+const cardContainer = document.querySelector('.card__container');
 
 const wait = (seconds) => {
   return new Promise((resolve) => {
@@ -125,3 +127,58 @@ const testImg = document.querySelector('.image');
 
 // get genres for default value;
 showGenres();
+
+// cards related
+const getMediaTitle = (result) => {
+  if (result.title) return result.title;
+  if (result.original_title) return result.original_title;
+  if (result.name) return result.name;
+  if (result.original_name) return result.original_name;
+};
+
+const showOnlyYear = (date) => {
+  return date.split('-')[0];
+};
+// converting search to poster cards
+const convertResultsToCards = (result) => {
+  // convert genre ids to genres
+  let genres = result.genre_ids;
+  let date = result.release_date ? result.release_date : result.first_air_date;
+  const markup = `
+  <div class="card" id="${result.id}">
+					<img
+						class="card__poster"
+						src="${Request.getPoster(result.poster_path)}"
+						alt="poster"
+					/>
+					<h3 class="card__title">${getMediaTitle(result)}</h3>
+					<h2 class="card__date">(${showOnlyYear(date)})</h2>
+
+					<div class="card__genres no__opacity">
+						<div class="genres__color">Action</div>
+						<div class="genres__color">Romance</div>
+						<div class="genres__color">Thriller</div>
+					</div>
+
+					<p class="card__text no__opacity">
+						${result.overview}
+					</p>
+					<div class="card__rating no__opacity">${result.vote_average}</div>
+				</div>
+  
+  `;
+  cardContainer.insertAdjacentHTML('beforeend', markup);
+};
+
+const showTrending = async () => {
+  const { results } = await Request.searchTrending();
+  console.log(results);
+  results.forEach((result) => {
+    convertResultsToCards(result);
+  });
+};
+
+// click trending
+trendingBtn.addEventListener('click', showTrending);
+
+//https:image.tmdb.org/t/p/w500/2CAL2433ZeIihfX1Hb2139CX0pW.jpg

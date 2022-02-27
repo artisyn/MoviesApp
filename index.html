@@ -19,189 +19,134 @@
 		<title>Movie App</title>
 	</head>
 	<body>
-		<div class="app__container">
-			<div class="top__bar">
-				<div class="logo">
-					<img src="./images/logo.svg" alt="logo" />
-				</div>
-				<div class="search__container">
-					<label for="search__check" class="search__label">
-						<input type="checkbox" id="search__check" />
-						<div class="search__input">
-							<div class="search__logo">
-								<img
-									src="./images/searchLogo2.svg"
-									alt="magnifying-glass"
-								/>
-							</div>
-						</div>
-					</label>
-					<input
-						type="text"
-						class="input__text no__opacity no__click"
-						placeholder="Search for Movies, Tv, etc."
-					/>
-				</div>
-			</div>
-			<nav class="left__nav">
-				<div class="nav__items">
-					<ul>
-						<li class="trends">
-							<i class="fas fa-sort-amount-up"></i>
-						</li>
-						<label for="movie__checkbox">
-							<li class="film__tv">
-								<input type="checkbox" id="movie__checkbox" />
-								<i class="fas fa-film"></i>
-							</li>
-						</label>
-						<li><i class="fas fa-star"></i></li>
-						<li><i class="fas fa-angle-down"></i></li>
-					</ul>
-				</div>
-				<!-- slide__left -->
-				<div class="sliding__menu">
-					<form action="">
-						<div class="media__container">
-							<h2 class="media__title">Search for:</h2>
-							<div class="media__type">
-								<label for="type__movie">
-									<input
-										class="media__radio"
-										type="radio"
-										name="media"
-										id="type__movie"
-										data-media="movie"
-										checked
-									/>
-									<div class="media__movie">MOVIE</div></label
-								>
+		<!-- <div class="app__container"> -->
 
-								<label for="type__tv">
-									<input
-										class="media__radio"
-										type="radio"
-										name="media"
-										id="type__tv"
-										data-media="tv"
-									/>
-									<div class="media__tv">TV</div></label
-								>
-							</div>
+		<nav class="left__nav">
+			<div class="nav__items">
+				<ul>
+					<li>
+						<div class="logo">
+							<img src="./images/logo.svg" alt="logo" />
 						</div>
-						<h2 class="genres__title">Genres</h2>
-						<div class="genres__container">
-							<!-- <label class="genre__label" for="genre">
+					</li>
+					<li class="trends">
+						<i class="fas fa-sort-amount-up"></i>
+					</li>
+					<label for="movie__checkbox">
+						<li class="film__tv">
+							<input type="checkbox" id="movie__checkbox" />
+							<i class="fas fa-film"></i>
+						</li>
+					</label>
+					<li><i class="fas fa-star"></i></li>
+					<li><i class="fas fa-angle-down"></i></li>
+				</ul>
+			</div>
+
+			<!-- slide__left -->
+			<div class="sliding__menu slide__left">
+				<form action="">
+					<div class="media__container">
+						<h2 class="media__title">Search for:</h2>
+						<div class="media__type">
+							<label for="type__movie">
 								<input
-									class="genre__input"
-									type="checkbox"
-									id="genre"
+									class="media__radio"
+									type="radio"
+									name="media"
+									id="type__movie"
+									data-media="movie"
+									checked
 								/>
-								<div class="genre__container">
-									<span class="genre__name">ACTION</span>
-									<span class="genre__icon-check"
-										><i class="fas fa-check"></i
-									></span>
-									<span class="genre__icon-close"
-										><i class="fas fa-times"></i
-									></span>
-								</div>
-							</label>
-							<label class="genre__label" for="genr">
+								<div class="media__movie">MOVIE</div></label
+							>
+
+							<label for="type__tv">
 								<input
-									class="genre__input"
-									type="checkbox"
-									id="genr"
+									class="media__radio"
+									type="radio"
+									name="media"
+									id="type__tv"
+									data-media="tv"
 								/>
-								<div class="genre__container">
-									<span class="genre__name">ACTION</span>
-									<span class="genre__icon-check"
-										><i class="fas fa-check"></i
-									></span>
-									<span class="genre__icon-close"
-										><i class="fas fa-times"></i
-									></span>
-								</div>
-							</label>
-							<label class="genre__label" for="gen">
-								<input
-									class="genre__input"
-									type="checkbox"
-									id="gen"
-								/>
-								<div class="genre__container">
-									<span class="genre__name">ACTION</span>
-									<span class="genre__icon-check"
-										><i class="fas fa-check"></i
-									></span>
-									<span class="genre__icon-close"
-										><i class="fas fa-times"></i
-									></span>
-								</div>
-							</label>
-							<label class="genre__label" for="ge">
-								<input
-									class="genre__input"
-									type="checkbox"
-									id="ge"
-								/>
-								<div class="genre__container">
-									<span class="genre__name">ACTION</span>
-									<span class="genre__icon-check"
-										><i class="fas fa-check"></i
-									></span>
-									<span class="genre__icon-close"
-										><i class="fas fa-times"></i
-									></span>
-								</div>
-							</label>
-							<label class="genre__label" for="g">
-								<input
-									class="genre__input"
-									type="checkbox"
-									id="g"
-								/>
-								<div class="genre__container">
-									<span class="genre__name">ACTION</span>
-									<span class="genre__icon-check"
-										><i class="fas fa-check"></i
-									></span>
-									<span class="genre__icon-close"
-										><i class="fas fa-times"></i
-									></span>
-								</div>
-							</label> -->
+								<div class="media__tv">TV</div></label
+							>
 						</div>
-						<h2 class="rating__title">RATING</h2>
-						<div class="rating__container">
-							<div class="range__name">
-								IMDB min <span class="imdb__value">5.5</span>
-							</div>
-							<input
-								type="range"
-								id="imdb__range"
-								min="1"
-								max="10"
-								step=".1"
+					</div>
+					<h2 class="genres__title">Genres</h2>
+					<div class="genres__container"></div>
+					<h2 class="rating__title">RATING</h2>
+					<div class="rating__container">
+						<div class="range__name">
+							IMDB min <span class="imdb__value">5.5</span>
+						</div>
+						<input
+							type="range"
+							id="imdb__range"
+							min="1"
+							max="10"
+							step=".1"
+						/>
+					</div>
+					<div class="show__container">
+						<button class="btn__show" type="submit">Show</button>
+					</div>
+				</form>
+			</div>
+		</nav>
+		<div class="top__bar">
+			<div class="search__container">
+				<label for="search__check" class="search__label">
+					<input type="checkbox" id="search__check" />
+					<div class="search__input">
+						<div class="search__logo">
+							<img
+								src="./images/searchLogo2.svg"
+								alt="magnifying-glass"
 							/>
 						</div>
-						<div class="show__container">
-							<button class="btn__show" type="submit">
-								Show
-							</button>
-						</div>
-					</form>
-				</div>
-			</nav>
-			<div class="main__container">
-				<div class="title">
-					<h1>Premium Streaming</h1>
-				</div>
-				<div class="main__content">
-					<i class="fa-solid fa-arrow-up-wide-short"></i>
-				</div>
+					</div>
+				</label>
+				<input
+					type="text"
+					class="input__text no__opacity no__click"
+					placeholder="Search for Movies, Tv, etc."
+				/>
 			</div>
 		</div>
+		<div class="main__container">
+			<div class="title">
+				<h1>Premium Streaming</h1>
+			</div>
+			<div class="main__content">
+				<h2 class="main__title">Popular Today</h2>
+			</div>
+			<div class="card__container"></div>
+
+			<!-- <div class="card">
+					<img
+						class="card__poster"
+						src="https:image.tmdb.org/t/p/w500/2CAL2433ZeIihfX1Hb2139CX0pW.jpg"
+						alt="poster"
+					/>
+					<h3 class="card__title">Movie Title</h3>
+					<h2 class="card__date">(2012)</h2>
+
+					<div class="card__genres no__opacity">
+						<div class="genres__color">Action</div>
+						<div class="genres__color">Romance</div>
+						<div class="genres__color">Thriller</div>
+					</div>
+
+					<p class="card__text no__opacity">
+						Lorem ipsum dolor sit amet consectetur, adipisicing
+						elit. Deleniti libero deserunt animi provident, magni,
+						vitae veniam ullam quidem quas voluptas minus maxime
+						dolorem.
+					</p>
+					<div class="card__rating no__opacity">5.5</div>
+				</div> -->
+		</div>
+		<!-- </div> -->
 	</body>
-	<!-- <div class="spinner"><img src="./images/aplusLogo.svg" alt="spinner"></div> -->
 </html>

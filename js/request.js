@@ -10,10 +10,7 @@ const listOfGenres = async (type) => {
     );
     if (!x.ok) throw new Error('Bad url, please try again 📛');
     if (x.status === 404) throw new Error('Page not found ❌');
-    console.log(x);
     const c = await x.json();
-
-    console.log(c);
     return c;
   } catch (error) {
     console.log(error);
@@ -21,7 +18,7 @@ const listOfGenres = async (type) => {
 };
 
 // requesting top rated movies or tv shows, page number
-const SearchTopRated = async (type, pageNumber) => {
+const searchTopRated = async (type = 'movie', pageNumber = 1) => {
   try {
     const x = await fetch(
       `https://api.themoviedb.org/3/${type}/top_rated?&api_key=${API_KEY}&language=en-US&page=${pageNumber}`
@@ -55,16 +52,15 @@ const searchByValue = async (type, searchVal, pageNumber = 1) => {
 
 // trending type - all/movies/tv  period - day/week
 
-const searchTrending = async (type, period) => {
+const searchTrending = async (type = 'all', period = 'week') => {
   try {
     const x = await fetch(
       `https://api.themoviedb.org/3/trending/${type}/${period}?api_key=${API_KEY}`
     );
     if (!x.ok) throw new Error('Bad url, please try again 📛');
     if (x.status === 404) throw new Error('Page not found ❌');
-    console.log(x);
     const c = await x.json();
-    console.log(c);
+    return c;
   } catch (error) {
     console.log(error);
   }
@@ -98,6 +94,6 @@ export {
   searchByGenres,
   searchTrending,
   searchByValue,
-  SearchTopRated,
+  searchTopRated,
   listOfGenres,
 };

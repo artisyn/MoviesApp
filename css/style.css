@@ -111,13 +111,12 @@ h2 {
 
 .left__nav {
 	float: left;
-	padding-top: 4rem;
 	display: flex;
 	justify-content: center;
 	width: 4rem;
 	height: 100vh;
 	position: sticky;
-	bottom: 0;
+	top: 0;
 	background-color: var(--color-1);
 	z-index: 90;
 }
@@ -125,7 +124,7 @@ h2 {
 .nav__items {
 	position: relative;
 	width: 100%;
-	padding-top: 2rem;
+	/* padding-top: 2rem; */
 	background-color: var(--color-1);
 	z-index: 70;
 }
@@ -341,6 +340,8 @@ ul li:nth-child(4):hover::before {
 }
 
 .main__container {
+	padding-left: 5rem;
+	padding-right: 1rem;
 	min-height: 33rem;
 }
 .title {
@@ -348,6 +349,81 @@ ul li:nth-child(4):hover::before {
 	text-align: center;
 	color: var(--color-white);
 	padding: 1rem;
+}
+
+.card__container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+
+.card {
+	border-radius: 0.5rem;
+	height: 23rem;
+	width: 12rem;
+	color: white;
+	position: relative;
+	overflow: hidden;
+	transition: all ease-in 0.5s;
+	cursor: pointer;
+}
+.card:hover {
+	z-index: 100;
+	flex-grow: 2;
+	background-color: var(--left-slide);
+	padding: 1rem;
+}
+
+.card > img {
+	max-width: 100%;
+}
+.card__poster {
+	height: 18rem;
+}
+.card__expanded {
+}
+
+.card__rating {
+	border: 1px solid white;
+	width: 30%;
+	padding: 0.2rem;
+	text-align: center;
+	border-top: none;
+	border-radius: 0.3rem;
+	position: relative;
+	top: -0.5rem;
+	margin: 0 auto;
+	background-color: goldenrod;
+	color: black;
+	font-weight: bold;
+	font-size: 1.3rem;
+}
+.card__title {
+	text-align: left;
+	margin: 0.4rem 0 0.4rem 0;
+}
+.card__date {
+	text-align: left;
+	margin: 0;
+	font-size: 1.2rem;
+}
+.card__genres {
+	display: flex;
+	gap: 0.3rem;
+	flex-wrap: wrap;
+	transition: all ease-in 0.5s;
+}
+.card__text {
+	transition: all ease-in 0.5s;
+}
+.genres__color {
+	border-radius: 0.5rem;
+	padding: 0.1rem;
+	font-size: 0.8rem;
+	width: 4rem;
+	text-align: center;
 }
 
 /* general styles */
