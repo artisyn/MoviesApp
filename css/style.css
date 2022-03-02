@@ -172,7 +172,7 @@ ul li:hover {
 	right: -0.7rem;
 }
 
-ul li:nth-child(3):hover::before {
+ul li:nth-child(4):hover::before {
 	content: 'Fovorite';
 	position: absolute;
 	color: white;
@@ -180,7 +180,7 @@ ul li:nth-child(3):hover::before {
 	top: -1rem;
 	right: -0.7rem;
 }
-ul li:nth-child(4):hover::before {
+ul li:nth-child(5):hover::before {
 	content: 'Footer';
 	position: absolute;
 	color: white;
@@ -200,6 +200,7 @@ ul li:nth-child(4):hover::before {
 	position: absolute;
 	transition: all ease-in 0.24s;
 	right: -15rem;
+	top: 1rem;
 	z-index: -1;
 	background-color: var(--left-slide);
 	padding: 1rem 0;
@@ -349,15 +350,22 @@ ul li:nth-child(4):hover::before {
 }
 .selected__card {
 	z-index: 1000;
-	border: 1px solid white;
+	border: 1px solid var(--color-1);
+	border-radius: 1rem;
 	position: absolute;
-	width: 60vw;
-	height: 60vh;
+	width: 50vw;
+	height: 63vh;
 	margin-left: auto;
 	margin-right: auto;
 	left: 0;
 	right: 0;
 	top: 10rem;
+	background-color: black;
+	overflow: hidden;
+	padding: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .selected__card--close {
 	color: red;
@@ -366,6 +374,50 @@ ul li:nth-child(4):hover::before {
 	top: 0.8rem;
 	font-size: 2rem;
 	cursor: pointer;
+}
+.selected__container {
+	border: 1px solid white;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.selected__poster {
+	border: 1px solid orange;
+	min-width: 50%;
+	height: 59vh;
+}
+.selected__poster > img {
+	max-width: 100%;
+	max-height: 59vh;
+}
+.selected__info {
+	border: 1px solid yellow;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	height: 59vh;
+}
+.selected__title {
+	color: white;
+}
+.selected__date {
+	color: white;
+}
+.selected__text {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid greenyellow;
+	color: white;
+	flex-grow: 3;
+	font-size: 1.5rem;
+}
+.selected__genres {
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .title {
 	width: 100%;
