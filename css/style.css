@@ -350,22 +350,23 @@ ul li:nth-child(5):hover::before {
 }
 .selected__card {
 	z-index: 1000;
-	border: 1px solid var(--color-1);
 	border-radius: 1rem;
 	position: absolute;
-	width: 50vw;
-	height: 63vh;
+	width: 45rem;
+	height: 35rem;
 	margin-left: auto;
 	margin-right: auto;
 	left: 0;
 	right: 0;
 	top: 10rem;
-	background-color: black;
+	background-color: var(--left-slide);
 	overflow: hidden;
 	padding: 1rem;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	transition: all ease-out 0.3s;
 }
 .selected__card--close {
 	color: red;
@@ -376,48 +377,99 @@ ul li:nth-child(5):hover::before {
 	cursor: pointer;
 }
 .selected__container {
-	border: 1px solid white;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-.selected__poster {
-	border: 1px solid orange;
-	min-width: 50%;
-	height: 59vh;
-}
-.selected__poster > img {
-	max-width: 100%;
-	max-height: 59vh;
-}
-.selected__info {
-	border: 1px solid yellow;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-between;
-	height: 59vh;
-}
-.selected__title {
-	color: white;
-}
-.selected__date {
-	color: white;
-}
-.selected__text {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid greenyellow;
+}
+.selected__poster {
+	min-width: 50%;
+}
+.selected__poster > img {
+	max-width: 100%;
+	max-height: 30rem;
+}
+.selected__info {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: space-around;
+	min-height: 30rem;
+}
+.selected__title {
 	color: white;
-	flex-grow: 3;
-	font-size: 1.5rem;
+	font-size: 2rem;
+	font-weight: bold;
+}
+.selected__date--genres {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 1rem;
+}
+.circle {
+	background-color: white;
+	border-radius: 50%;
+	width: 0.4rem;
+	height: 0.4rem;
+}
+.selected__date {
+	color: white;
 }
 .selected__genres {
 	color: white;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	gap: 0.3rem;
+}
+.selected__text {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	flex-grow: 3;
+	font-size: 1.5rem;
+}
+
+.selected__play {
+	position: relative;
+	width: 100%;
+	padding: 0.2rem;
+}
+.selected__rating-container {
+	margin-left: 1rem;
+	float: left;
+	color: white;
+	min-height: 3rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.selected__rating {
+	font-size: 1.4rem;
+	font-weight: bold;
+}
+.selected__imdb {
+	border: 1px solid white;
+	padding: 0.1rem 0.2rem;
+}
+.selected__rating-value {
+	margin-left: 1rem;
+}
+.selected__play-btn {
+	float: right;
+	height: 3rem;
+	width: 10rem;
+	border: none;
+	outline: none;
+	background-color: var(--color-purple);
+	color: white;
+	cursor: pointer;
+	font-size: 1.4rem;
+}
+.selected__play-btn:hover {
+	background-color: #5443ec;
 }
 .title {
 	width: 100%;
@@ -454,9 +506,6 @@ ul li:nth-child(5):hover::before {
 .card__poster {
 	height: 18rem;
 }
-.card__expanded {
-}
-
 .card__rating {
 	border: 1px solid white;
 	width: 30%;
@@ -576,14 +625,71 @@ ul li:nth-child(5):hover::before {
 	}
 }
 
-@media only screen and (max-width: 1112px) {
+@media only screen and (max-width: 790px) {
 	.selected__card {
-		width: 100%;
-		min-height: 85vh;
-		left: 0;
-		right: 0;
+		height: 50rem;
+		width: 80%;
 		top: 5rem;
+		overflow: scroll;
+		overflow-x: hidden;
+		justify-content: flex-start;
+	}
+
+	.selected__container {
+		flex-direction: column;
+	}
+
+	.selected__title {
+		font-size: 1.5rem;
+		margin: 1rem;
+		margin-left: 0;
+	}
+
+	.selected__rating-container {
+		margin-left: 1rem;
+		float: left;
+		color: white;
+		min-height: 3rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.selected__play-btn {
+		width: 8rem;
 	}
 }
-@media only screen and (max-width: 1112px) {
+@media only screen and (max-width: 600px) {
+	.selected__card {
+		height: 35rem;
+		width: 100%;
+		top: 5rem;
+		overflow: scroll;
+		overflow-x: hidden;
+		justify-content: flex-start;
+	}
+
+	.selected__container {
+		flex-direction: column;
+	}
+
+	.selected__title {
+		font-size: 1.5rem;
+		margin: 1rem;
+		margin-left: 0;
+	}
+
+	.selected__rating-container {
+		margin-left: 1rem;
+		float: left;
+		color: white;
+		min-height: 3rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.selected__play-btn {
+		width: 8rem;
+	}
 }

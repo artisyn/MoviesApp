@@ -41,7 +41,7 @@ imdbRange.addEventListener('change', () => {
 });
 
 selectedCardClose.addEventListener('click', () => {
-  selectedCard.classList.add('display__none');
+  selectedCard.classList.add('display__none', 'no__opacity');
 });
 
 // Sidebar functions
@@ -177,7 +177,79 @@ const convertResultsToCards = (result) => {
 };
 
 // click to expand
-// continue with card
+
+const clearSelectedCard = () => {
+  if (document.querySelector('.selected__container')) {
+    document.querySelector('.selected__container').remove();
+    document.querySelector('.selected__play').remove();
+  }
+};
+const fillSelectedGenres = (genres) => {
+  let genresArr = genres.split(' ');
+  if (genresArr.length === 1)
+    return `<div class="selected__genre">${genres}</div>`;
+  let markup = '';
+  genresArr.forEach((genre) => {
+    markup += `<div class="selected__genre">${genre}</div>`;
+  });
+  return markup;
+};
+
+const fillSelectedCard = (cardInfo) => {
+  console.log(cardInfo);
+  const title = cardInfo.querySelector('.card__title').innerText;
+  const date = cardInfo.querySelector('.card__date').innerText;
+  const text = cardInfo.querySelector('.card__text').innerText;
+  const genres = cardInfo.querySelector('.card__genres').innerText;
+  const rating = cardInfo.querySelector('.card__rating').innerText;
+  const posterUrl = cardInfo.querySelector('.card__poster').src;
+  console.log(title, date, text, genres, rating, posterUrl);
+  clearSelectedCard();
+  const markup = `
+  <div class="selected__container">
+					<div class="selected__poster">
+						<img
+							class="selected__poster"
+							src="${posterUrl}"
+							alt="poster"
+						/>
+					</div>
+					<div class="selected__info">
+						<h3 class="selected__title">${title}</h3>
+						<div class="selected__date--genres">
+							<h2 class="selected__date">${date.slice(1, -1)}</h2>
+							<span class="circle"></span>
+							<div class="selected__genres">
+              ${fillSelectedGenres(genres)}
+							</div>
+						</div>
+						<p class="selected__text">
+							${text}
+						</p>
+					</div>
+				</div>
+				<div class="selected__play">
+					<div class="selected__rating-container">
+						<div class="selected__rating">
+							<span class="selected__imdb">Imdb</span>
+							<span class="selected__rating-value">${rating}</span>
+						</div>
+					</div>
+					<button class="selected__play-btn">Play</button>
+				</div>`;
+
+  selectedCard.insertAdjacentHTML('beforeend', markup);
+};
+
+cardContainer.addEventListener('click', async (e) => {
+  if (e.target.closest('.card')) {
+    const cardInfo = e.target.closest('.card');
+    selectedCard.classList.remove('display__none');
+    fillSelectedCard(cardInfo);
+    await wait(0.2);
+    selectedCard.classList.remove('no__opacity');
+  }
+});
 
 const showTrending = async () => {
   const { results } = await Request.searchTrending();
@@ -189,3 +261,5 @@ const showTrending = async () => {
 
 // click trending
 trendingBtn.addEventListener('click', showTrending);
+
+// figure out genres

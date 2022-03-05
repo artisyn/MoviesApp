@@ -113,11 +113,12 @@
 					placeholder="Search for Movies, Tv, etc."
 				/>
 			</div>
-			<div class="selected__card">
+			<!-- display none -->
+			<div class="selected__card display__none no__opacity">
 				<span class="selected__card--close"
 					><i class="fas fa-times"></i
 				></span>
-				<div class="selected__container">
+				<!-- <div class="selected__container">
 					<div class="selected__poster">
 						<img
 							class="selected__poster"
@@ -125,10 +126,17 @@
 							alt="poster"
 						/>
 					</div>
-
 					<div class="selected__info">
 						<h3 class="selected__title">Movie Title</h3>
-						<h2 class="selected__date">(2012)</h2>
+						<div class="selected__date--genres">
+							<h2 class="selected__date">2012</h2>
+							<span class="circle"></span>
+							<div class="selected__genres">
+								<div class="selected__genre">Action</div>
+								<div class="selected__genre">Action</div>
+								<div class="selected__genre">Action</div>
+							</div>
+						</div>
 						<p class="selected__text">
 							Lorem, ipsum dolor sit amet consectetur adipisicing
 							elit. Atque perspiciatis voluptatum velit, ex
@@ -136,17 +144,20 @@
 							veritatis modi mollitia quas. Odio, labore incidunt
 							earum architecto assumenda praesentium dolorum.
 						</p>
-						<div class="selected__genres">
-							<div class="selected__genre">Action</div>
-							<div class="selected__genre">Action</div>
-							<div class="selected__genre">Action</div>
-						</div>
 					</div>
 				</div>
+				<div class="selected__play">
+					<div class="selected__rating-container">
+						<div class="selected__rating">
+							<span class="selected__imdb">Imdb</span>
+							<span class="selected__rating-value">4.4</span>
+						</div>
+					</div>
+					<button class="selected__play-btn">Play</button>
+				</div> -->
 			</div>
 		</div>
 		<div class="main__container">
-			<!-- <div class="selected__card"></div> -->
 			<div class="title">
 				<h1>Premium Streaming</h1>
 			</div>
@@ -154,31 +165,6 @@
 				<h2 class="main__title">Popular Today</h2>
 			</div>
 			<div class="card__container"></div>
-
-			<!-- <div class="card">
-					<img
-						class="card__poster"
-						src="https:image.tmdb.org/t/p/w500/2CAL2433ZeIihfX1Hb2139CX0pW.jpg"
-						alt="poster"
-					/>
-					<h3 class="card__title">Movie Title</h3>
-					<h2 class="card__date">(2012)</h2>
-
-					<div class="card__genres no__opacity">
-						<div class="genres__color">Action</div>
-						<div class="genres__color">Romance</div>
-						<div class="genres__color">Thriller</div>
-					</div>
-
-					<p class="card__text no__opacity">
-						Lorem ipsum dolor sit amet consectetur, adipisicing
-						elit. Deleniti libero deserunt animi provident, magni,
-						vitae veniam ullam quidem quas voluptas minus maxime
-						dolorem.
-					</p>
-					<div class="card__rating no__opacity">5.5</div>
-				</div> -->
 		</div>
-		<!-- </div> -->
 	</body>
 </html>
