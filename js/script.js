@@ -18,6 +18,45 @@ const trendingBtn = document.querySelector('.trends');
 const cardContainer = document.querySelector('.card__container');
 const selectedCard = document.querySelector('.selected__card');
 const selectedCardClose = document.querySelector('.selected__card--close');
+let currentSearch = {
+  media: '',
+  ids: '',
+  rating: '',
+  page: 1,
+};
+
+const genreMap = {
+  28: 'Action',
+  12: 'Adventure',
+  16: 'Animation',
+  35: 'Comedy',
+  80: 'Crime',
+  99: 'Documentary',
+  18: 'Drama',
+  10751: 'Family',
+  14: 'Fantasy',
+  36: 'History',
+  27: 'Horror',
+  10402: 'Music',
+  9648: 'Mystery',
+  10749: 'Romance',
+  878: 'Science Fiction',
+  10770: 'TV Movie',
+  53: 'Thriller',
+  10752: 'War',
+  37: 'Western',
+  10759: 'Action & Adventure',
+  10762: 'Kids',
+  110764: 'Reality',
+  10763: 'News',
+  110765: 'Sci-Fi & Fantasy',
+  110766: 'Soap',
+  110767: 'Talk',
+  110768: 'War & Politics',
+  137: 'Western',
+  10765: 'Sci-Fi & Fantasy',
+  10768: 'War & Politics',
+};
 
 const wait = (seconds) => {
   return new Promise((resolve) => {
@@ -92,47 +131,7 @@ mediaTypeChange.forEach((media) => {
   });
 });
 
-// submitting search form
-// movie or tv
-const getMediaType = () => {
-  let mediaX = '';
-  mediaTypeChange.forEach((media) => {
-    if (media.checked) mediaX = media.dataset.media;
-  });
-  return mediaX;
-};
-// active geres id or empty array
-const getSelectedGenresIds = () => {
-  const allSelectedGenres = document.querySelectorAll('.genre__input');
-  const allIds = Array.from(allSelectedGenres).reduce((accu, el) => {
-    if (el.checked === true) {
-      accu.push(el.id);
-    }
-    return accu;
-  }, []);
-  return allIds;
-};
-
-btnShow.addEventListener('click', (e) => {
-  e.preventDefault();
-
-  const mediaType = getMediaType();
-
-  const allIds = getSelectedGenresIds();
-
-  let imdb = imdbRange.value;
-
-  console.log(mediaType);
-  console.log(imdb);
-  console.log(allIds);
-});
-
 const testImg = document.querySelector('.image');
-
-// funcions on page start
-
-// get genres for default value;
-showGenres();
 
 // cards related
 const getMediaTitle = (result) => {
@@ -146,6 +145,19 @@ const showOnlyYear = (date) => {
   return date.split('-')[0];
 };
 // converting search to poster cards
+
+// converting genre ids to genres;
+const genreIdsToHtml = (genreArr) => {
+  let markup = '';
+  if (genreArr.length === 0)
+    return `<div class="genres__color">Genre is unknown</div>`;
+
+  genreArr.forEach((genreId) => {
+    markup += `<div class="genres__color">${genreMap[genreId]}</div>`;
+  });
+  return markup;
+};
+
 const convertResultsToCards = (result) => {
   // convert genre ids to genres
   let genres = result.genre_ids;
@@ -161,9 +173,7 @@ const convertResultsToCards = (result) => {
 					<h2 class="card__date">(${showOnlyYear(date)})</h2>
 
 					<div class="card__genres no__opacity">
-						<div class="genres__color">Action</div>
-						<div class="genres__color">Romance</div>
-						<div class="genres__color">Thriller</div>
+					${genreIdsToHtml(genres)}
 					</div>
 
 					<p class="card__text no__opacity">
@@ -173,6 +183,7 @@ const convertResultsToCards = (result) => {
 				</div>
   
   `;
+
   cardContainer.insertAdjacentHTML('beforeend', markup);
 };
 
@@ -184,26 +195,26 @@ const clearSelectedCard = () => {
     document.querySelector('.selected__play').remove();
   }
 };
+/////////////////////////////////////////////////////
 const fillSelectedGenres = (genres) => {
-  let genresArr = genres.split(' ');
+  let genresArr = Array.from(genres);
   if (genresArr.length === 1)
-    return `<div class="selected__genre">${genres}</div>`;
+    return `<div class="selected__genre">${genres[0].innerText}</div>`;
   let markup = '';
   genresArr.forEach((genre) => {
-    markup += `<div class="selected__genre">${genre}</div>`;
+    markup += `<div class="selected__genre">${genre.innerText}</div>`;
   });
   return markup;
 };
 
 const fillSelectedCard = (cardInfo) => {
-  console.log(cardInfo);
   const title = cardInfo.querySelector('.card__title').innerText;
   const date = cardInfo.querySelector('.card__date').innerText;
   const text = cardInfo.querySelector('.card__text').innerText;
-  const genres = cardInfo.querySelector('.card__genres').innerText;
+  const genres = cardInfo.querySelectorAll('.genres__color');
   const rating = cardInfo.querySelector('.card__rating').innerText;
   const posterUrl = cardInfo.querySelector('.card__poster').src;
-  console.log(title, date, text, genres, rating, posterUrl);
+  // console.log(title, date, text, genres, rating, posterUrl);
   clearSelectedCard();
   const markup = `
   <div class="selected__container">
@@ -254,6 +265,9 @@ cardContainer.addEventListener('click', async (e) => {
 const showTrending = async () => {
   const { results } = await Request.searchTrending();
   console.log(results);
+  cardContainer.innerHTML = Spinner;
+  await wait(1);
+  cardContainer.innerHTML = '';
   results.forEach((result) => {
     convertResultsToCards(result);
   });
@@ -262,4 +276,80 @@ const showTrending = async () => {
 // click trending
 trendingBtn.addEventListener('click', showTrending);
 
-// figure out genres
+// submitting search form
+// movie or tv
+const getMediaType = () => {
+  let mediaX = '';
+  mediaTypeChange.forEach((media) => {
+    if (media.checked) mediaX = media.dataset.media;
+  });
+  return mediaX;
+};
+// active geres id or empty array
+const getSelectedGenresIds = () => {
+  const allSelectedGenres = document.querySelectorAll('.genre__input');
+  const allIds = Array.from(allSelectedGenres).reduce((accu, el) => {
+    if (el.checked === true) {
+      accu.push(el.id);
+    }
+    return accu;
+  }, []);
+  return allIds;
+};
+
+const separateIds = (ids) => {
+  return ids.reduce((accu, el, index, array) => {
+    let x = el + '|';
+    if (index === array.length - 1) x = el;
+    accu += x;
+    return accu;
+  }, '');
+};
+
+// use id,id === and
+// use id|id === or
+const showUserSelectedMedia = async (mediaType, ids, rating) => {
+  // separate ids
+  const separatedIds = separateIds(ids);
+  // get result based on user inputs
+  cardContainer.innerHTML = Spinner;
+  await wait(1);
+  const { results } = await Request.searchByGenres(
+    mediaType,
+    separatedIds,
+    rating
+  );
+  // add result values for page navigation
+  currentSearch.media = mediaType;
+  currentSearch.ids = separatedIds;
+  currentSearch.rating = rating;
+  // display results
+  cardContainer.innerHTML = '';
+  results.forEach((result) => {
+    convertResultsToCards(result);
+  });
+
+  console.log(results);
+  console.log(currentSearch);
+};
+
+btnShow.addEventListener('click', (e) => {
+  e.preventDefault();
+
+  const mediaType = getMediaType();
+
+  const allIds = getSelectedGenresIds();
+
+  let imdb = imdbRange.value;
+
+  console.log(mediaType);
+  console.log(imdb);
+  console.log(allIds);
+  showUserSelectedMedia(mediaType, allIds, imdb);
+});
+// add favorite to selected card
+
+// funcions on page start
+
+// get genres for default value;
+showGenres();

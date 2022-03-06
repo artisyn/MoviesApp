@@ -67,16 +67,20 @@ const searchTrending = async (type = 'all', period = 'week') => {
 };
 
 // search by genre (id) and type
-const searchByGenres = async (type, genreId) => {
+
+// use id,id === and
+// use id|id === or
+const searchByGenres = async (type, genreId, rating) => {
   try {
     const x = await fetch(
-      `https://api.themoviedb.org/3/discover/${type}?api_key=${API_KEY}&with_genres=${genreId}`
+      `https://api.themoviedb.org/3/discover/${type}?api_key=${API_KEY}&with_genres=${genreId}&vote_average.gte=${rating}`
     );
     if (!x.ok) throw new Error('Bad url, please try again 📛');
     if (x.status === 404) throw new Error('Page not found ❌');
-    console.log(x);
+    // console.log(x);
     const c = await x.json();
-    console.log(c);
+    // console.log(c);
+    return c;
   } catch (error) {
     console.log(error);
   }
