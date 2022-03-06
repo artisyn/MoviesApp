@@ -18,6 +18,11 @@ const trendingBtn = document.querySelector('.trends');
 const cardContainer = document.querySelector('.card__container');
 const selectedCard = document.querySelector('.selected__card');
 const selectedCardClose = document.querySelector('.selected__card--close');
+const currentPageDisplay = document.querySelector('.current__page');
+const pageBtnContainer = document.querySelector('.pagebtn__container');
+const nextButton = document.querySelector('.nxt__btn');
+const previousButton = document.querySelector('.prev__btn');
+let totalPages;
 let currentSearch = {
   media: '',
   ids: '',
@@ -142,6 +147,8 @@ const getMediaTitle = (result) => {
 };
 
 const showOnlyYear = (date) => {
+  if (!date) return '';
+  console.log(date);
   return date.split('-')[0];
 };
 // converting search to poster cards
@@ -308,20 +315,23 @@ const separateIds = (ids) => {
 
 // use id,id === and
 // use id|id === or
-const showUserSelectedMedia = async (mediaType, ids, rating) => {
+const showUserSelectedMedia = async (mediaType, ids, rating, pageNumber) => {
   // separate ids
   const separatedIds = separateIds(ids);
   // get result based on user inputs
   cardContainer.innerHTML = Spinner;
   await wait(1);
-  const { results } = await Request.searchByGenres(
+  const { total_pages, results } = await Request.searchByGenres(
     mediaType,
     separatedIds,
-    rating
+    rating,
+    pageNumber
   );
+  console.log(total_pages);
+  totalPages = +total_pages;
   // add result values for page navigation
   currentSearch.media = mediaType;
-  currentSearch.ids = separatedIds;
+  currentSearch.ids = ids;
   currentSearch.rating = rating;
   // display results
   cardContainer.innerHTML = '';
@@ -331,10 +341,12 @@ const showUserSelectedMedia = async (mediaType, ids, rating) => {
 
   console.log(results);
   console.log(currentSearch);
+  pageBtnContainer.classList.remove('display__none');
 };
 
 btnShow.addEventListener('click', (e) => {
   e.preventDefault();
+  slidingMenu.classList.toggle('slide__left');
 
   const mediaType = getMediaType();
 
@@ -347,9 +359,40 @@ btnShow.addEventListener('click', (e) => {
   console.log(allIds);
   showUserSelectedMedia(mediaType, allIds, imdb);
 });
+
+nextButton.addEventListener('click', (e) => {
+  if (currentSearch.page === totalPages < 10 ? totalPages : 10) return;
+  pageBtnContainer.classList.add('display__none');
+  currentSearch.page += 1;
+  currentPageDisplay.innerHTML = currentSearch.page;
+  showUserSelectedMedia(
+    currentSearch.media,
+    currentSearch.ids,
+    currentSearch.rating,
+    currentSearch.page
+  );
+});
+
+previousButton.addEventListener('click', (e) => {
+  if (currentSearch.page === 1) return;
+  pageBtnContainer.classList.add('display__none');
+  currentSearch.page -= 1;
+  currentPageDisplay.innerHTML = currentSearch.page;
+  showUserSelectedMedia(
+    currentSearch.media,
+    currentSearch.ids,
+    currentSearch.rating,
+    currentSearch.page
+  );
+});
+
+// add search by value
 // add favorite to selected card
+// add footer
 
 // funcions on page start
 
 // get genres for default value;
 showGenres();
+
+// load popular media on start
