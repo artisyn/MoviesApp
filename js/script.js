@@ -22,6 +22,10 @@ const currentPageDisplay = document.querySelector('.current__page');
 const pageBtnContainer = document.querySelector('.pagebtn__container');
 const nextButton = document.querySelector('.nxt__btn');
 const previousButton = document.querySelector('.prev__btn');
+const mainTitle = document.querySelector('.main__title');
+const footer = document.querySelector('footer');
+const footerBtn = document.querySelector('.footer__btn');
+const filmTv = document.querySelector('.film__tv');
 let totalPages;
 let currentSearch = {
   media: '',
@@ -62,6 +66,34 @@ const genreMap = {
   10765: 'Sci-Fi & Fantasy',
   10768: 'War & Politics',
 };
+
+// navHeight if needed
+const scrollToElement = (element) => {
+  const elCoords = element.getBoundingClientRect();
+  window.scrollTo({
+    left: elCoords.left + window.scrollX,
+    top: elCoords.top + window.scrollY,
+    behavior: 'smooth',
+  });
+};
+const scrollToElementPlus = (element) => {
+  const elCoords = element.getBoundingClientRect();
+  window.scrollTo({
+    left: elCoords.left + window.scrollX,
+    top: elCoords.top + window.scrollY - 50, // to completely scroll to top
+    behavior: 'smooth',
+  });
+};
+
+footerBtn.addEventListener('click', (e) => {
+  scrollToElement(footer);
+});
+btnShow.addEventListener('click', (e) => {
+  scrollToElementPlus(document.querySelector('.main__container'));
+});
+trendingBtn.addEventListener('click', (e) => {
+  scrollToElementPlus(document.querySelector('.main__container'));
+});
 
 const wait = (seconds) => {
   return new Promise((resolve) => {
@@ -148,7 +180,6 @@ const getMediaTitle = (result) => {
 
 const showOnlyYear = (date) => {
   if (!date) return '';
-  console.log(date);
   return date.split('-')[0];
 };
 // converting search to poster cards
@@ -271,7 +302,7 @@ cardContainer.addEventListener('click', async (e) => {
 
 const showTrending = async () => {
   const { results } = await Request.searchTrending();
-  console.log(results);
+  mainTitle.innerText = 'Trending Today';
   cardContainer.innerHTML = Spinner;
   await wait(1);
   cardContainer.innerHTML = '';
@@ -318,6 +349,7 @@ const separateIds = (ids) => {
 const showUserSelectedMedia = async (mediaType, ids, rating, pageNumber) => {
   // separate ids
   const separatedIds = separateIds(ids);
+  mainTitle.innerText = 'Your Search Results';
   // get result based on user inputs
   cardContainer.innerHTML = Spinner;
   await wait(1);
@@ -327,7 +359,6 @@ const showUserSelectedMedia = async (mediaType, ids, rating, pageNumber) => {
     rating,
     pageNumber
   );
-  console.log(total_pages);
   totalPages = +total_pages;
   // add result values for page navigation
   currentSearch.media = mediaType;
@@ -338,9 +369,6 @@ const showUserSelectedMedia = async (mediaType, ids, rating, pageNumber) => {
   results.forEach((result) => {
     convertResultsToCards(result);
   });
-
-  console.log(results);
-  console.log(currentSearch);
   pageBtnContainer.classList.remove('display__none');
 };
 
@@ -354,14 +382,12 @@ btnShow.addEventListener('click', (e) => {
 
   let imdb = imdbRange.value;
 
-  console.log(mediaType);
-  console.log(imdb);
-  console.log(allIds);
   showUserSelectedMedia(mediaType, allIds, imdb);
 });
 
 nextButton.addEventListener('click', (e) => {
-  if (currentSearch.page === totalPages < 10 ? totalPages : 10) return;
+  const maxPage = totalPages < 10 ? totalPages : 10; // preventing search if there are no more pages
+  if (currentSearch.page === maxPage) return;
   pageBtnContainer.classList.add('display__none');
   currentSearch.page += 1;
   currentPageDisplay.innerHTML = currentSearch.page;
@@ -386,13 +412,26 @@ previousButton.addEventListener('click', (e) => {
   );
 });
 
+const showTopRated = async () => {
+  const { results } = await Request.searchTopRated();
+  cardContainer.innerHTML = Spinner;
+  await wait(1);
+  cardContainer.innerHTML = '';
+  mainTitle.innerText = 'Top Rated Movies';
+  results.forEach((result) => {
+    convertResultsToCards(result);
+  });
+};
+
+// #TODO
+
 // add search by value
 // add favorite to selected card
 // add footer
+// keep title always visible
 
 // funcions on page start
 
 // get genres for default value;
 showGenres();
-
-// load popular media on start
+showTopRated();
