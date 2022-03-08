@@ -41,9 +41,10 @@ const searchByValue = async (type, searchVal, pageNumber = 1) => {
     );
     if (!x.ok) throw new Error('Bad url, please try again 📛');
     if (x.status === 404) throw new Error('Page not found ❌');
-    console.log(x);
+    // console.log(x);
     const c = await x.json();
-    console.log(c);
+    // console.log(c);
+    return c;
   } catch (error) {
     console.log(error);
   }

@@ -25,7 +25,7 @@ const previousButton = document.querySelector('.prev__btn');
 const mainTitle = document.querySelector('.main__title');
 const footer = document.querySelector('footer');
 const footerBtn = document.querySelector('.footer__btn');
-const filmTv = document.querySelector('.film__tv');
+
 let totalPages;
 let currentSearch = {
   media: '',
@@ -311,6 +311,34 @@ const showTrending = async () => {
   });
 };
 
+// user search by keyword
+
+const showSearchByKeyword = async (value) => {
+  scrollToElementPlus(document.querySelector('.main__container'));
+  mainTitle.innerText = 'Your Search Results';
+  // get result based on user inputs
+  cardContainer.innerHTML = Spinner;
+  await wait(1);
+  const { results, total_pages } = await Request.searchByValue(
+    'movie',
+    value,
+    currentSearch.page
+  );
+  cardContainer.innerHTML = '';
+
+  results.forEach((result) => {
+    convertResultsToCards(result);
+  });
+};
+
+searchInput.addEventListener('keyup', (e) => {
+  if (e.key === 'Enter' && searchInput.value !== '') {
+    showSearchByKeyword(searchInput.value);
+    currentSearch.value = searchInput.value;
+    searchInput.blur();
+  }
+});
+
 // click trending
 trendingBtn.addEventListener('click', showTrending);
 
@@ -364,6 +392,7 @@ const showUserSelectedMedia = async (mediaType, ids, rating, pageNumber) => {
   currentSearch.media = mediaType;
   currentSearch.ids = ids;
   currentSearch.rating = rating;
+
   // display results
   cardContainer.innerHTML = '';
   results.forEach((result) => {
@@ -374,6 +403,7 @@ const showUserSelectedMedia = async (mediaType, ids, rating, pageNumber) => {
 
 btnShow.addEventListener('click', (e) => {
   e.preventDefault();
+  pageBtnContainer.classList.add('display__none');
   slidingMenu.classList.toggle('slide__left');
 
   const mediaType = getMediaType();
@@ -381,6 +411,8 @@ btnShow.addEventListener('click', (e) => {
   const allIds = getSelectedGenresIds();
 
   let imdb = imdbRange.value;
+  currentSearch.page = 1;
+  currentPageDisplay.innerHTML = currentSearch.page;
 
   showUserSelectedMedia(mediaType, allIds, imdb);
 });
@@ -388,6 +420,7 @@ btnShow.addEventListener('click', (e) => {
 nextButton.addEventListener('click', (e) => {
   const maxPage = totalPages < 10 ? totalPages : 10; // preventing search if there are no more pages
   if (currentSearch.page === maxPage) return;
+  scrollToElementPlus(document.querySelector('.main__container'));
   pageBtnContainer.classList.add('display__none');
   currentSearch.page += 1;
   currentPageDisplay.innerHTML = currentSearch.page;
@@ -401,6 +434,7 @@ nextButton.addEventListener('click', (e) => {
 
 previousButton.addEventListener('click', (e) => {
   if (currentSearch.page === 1) return;
+  scrollToElementPlus(document.querySelector('.main__container'));
   pageBtnContainer.classList.add('display__none');
   currentSearch.page -= 1;
   currentPageDisplay.innerHTML = currentSearch.page;
@@ -425,7 +459,6 @@ const showTopRated = async () => {
 
 // #TODO
 
-// add search by value
 // add favorite to selected card
 // add footer
 // keep title always visible
