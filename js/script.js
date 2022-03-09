@@ -25,6 +25,7 @@ const previousButton = document.querySelector('.prev__btn');
 const mainTitle = document.querySelector('.main__title');
 const footer = document.querySelector('footer');
 const footerBtn = document.querySelector('.footer__btn');
+const mainLogo = document.querySelector('.main__logo');
 
 let totalPages;
 let currentSearch = {
@@ -85,6 +86,9 @@ const scrollToElementPlus = (element) => {
   });
 };
 
+mainLogo.addEventListener('click', (e) => {
+  location.reload();
+});
 footerBtn.addEventListener('click', (e) => {
   scrollToElement(footer);
 });
@@ -196,15 +200,15 @@ const genreIdsToHtml = (genreArr) => {
   return markup;
 };
 
-const convertResultsToCards = (result) => {
+const convertResultsToCards = async (result, mediaType) => {
   // convert genre ids to genres
   let genres = result.genre_ids;
   let date = result.release_date ? result.release_date : result.first_air_date;
   const markup = `
-  <div class="card" id="${result.id}">
+  <div class="card" id="${result.id}" data-media="${mediaType}">
 					<img
 						class="card__poster"
-						src="${Request.getPoster(result.poster_path)}"
+						src="${await Request.getPoster(result.poster_path)}"
 						alt="poster"
 					/>
 					<h3 class="card__title">${getMediaTitle(result)}</h3>
@@ -252,6 +256,9 @@ const fillSelectedCard = (cardInfo) => {
   const genres = cardInfo.querySelectorAll('.genres__color');
   const rating = cardInfo.querySelector('.card__rating').innerText;
   const posterUrl = cardInfo.querySelector('.card__poster').src;
+  const mediaType = cardInfo.dataset.media;
+  const id = cardInfo.id;
+
   // console.log(title, date, text, genres, rating, posterUrl);
   clearSelectedCard();
   const markup = `
@@ -284,7 +291,7 @@ const fillSelectedCard = (cardInfo) => {
 							<span class="selected__rating-value">${rating}</span>
 						</div>
 					</div>
-					<button class="selected__play-btn">Play</button>
+					<button class="selected__play-btn" data-id="${id}" data-media="${mediaType}">Play</button>
 				</div>`;
 
   selectedCard.insertAdjacentHTML('beforeend', markup);
@@ -300,14 +307,55 @@ cardContainer.addEventListener('click', async (e) => {
   }
 });
 
+const playTrailer = async (id, media) => {
+  const { videos } = await Request.searchVideos(id, media);
+  const result = await Request.searchVideos(id, media);
+  // console.log(result);
+  const trailer = videos.results.filter((video) => video.type === 'Trailer');
+  if (trailer.length === 0) {
+    console.log('no videos');
+    return;
+  }
+
+  const markup = `
+  <div class="trailer__container">
+					<span class="selected__trailer--close"
+						><i class="fas fa-times"></i
+					></span>
+					<iframe
+						class="selected__trailer"
+						src="https://www.youtube.com/embed/${trailer[0].key}"
+						frameborder="0"
+					></iframe>
+				</div>
+  
+  `;
+  selectedCard.insertAdjacentHTML('afterbegin', markup);
+
+  console.log(trailer[0].key);
+};
+
+selectedCard.addEventListener('click', (e) => {
+  if (e.target === document.querySelector('.selected__play-btn')) {
+    const id = e.target.dataset.id;
+    const media = e.target.dataset.media;
+    playTrailer(id, media);
+  }
+  if (e.target === document.querySelector('.selected__trailer--close')) {
+    e.target.closest('.trailer__container').remove();
+  }
+});
+
 const showTrending = async () => {
+  pageBtnContainer.classList.add('display__none');
   const { results } = await Request.searchTrending();
+  console.log(results);
   mainTitle.innerText = 'Trending Today';
   cardContainer.innerHTML = Spinner;
   await wait(1);
   cardContainer.innerHTML = '';
   results.forEach((result) => {
-    convertResultsToCards(result);
+    convertResultsToCards(result, result.media_type);
   });
 };
 
@@ -327,14 +375,14 @@ const showSearchByKeyword = async (value) => {
   cardContainer.innerHTML = '';
 
   results.forEach((result) => {
-    convertResultsToCards(result);
+    convertResultsToCards(result, 'movie');
   });
 };
 
 searchInput.addEventListener('keyup', (e) => {
   if (e.key === 'Enter' && searchInput.value !== '') {
     showSearchByKeyword(searchInput.value);
-    currentSearch.value = searchInput.value;
+    searchInput.value = '';
     searchInput.blur();
   }
 });
@@ -396,7 +444,7 @@ const showUserSelectedMedia = async (mediaType, ids, rating, pageNumber) => {
   // display results
   cardContainer.innerHTML = '';
   results.forEach((result) => {
-    convertResultsToCards(result);
+    convertResultsToCards(result, mediaType);
   });
   pageBtnContainer.classList.remove('display__none');
 };
@@ -453,7 +501,7 @@ const showTopRated = async () => {
   cardContainer.innerHTML = '';
   mainTitle.innerText = 'Top Rated Movies';
   results.forEach((result) => {
-    convertResultsToCards(result);
+    convertResultsToCards(result, 'movie');
   });
 };
 

@@ -86,10 +86,37 @@ const searchByGenres = async (type, genreId, rating, pageNumber = 1) => {
 };
 
 // getting full poster url
-const getPoster = (url, width = 500) => {
+const getPoster = async (url, width = 500) => {
+  if (!url) return `https://i.im.ge/2022/03/09/lyUsWa.png`;
   // poster with 500 width; + path;
+  try {
+    const img = await fetch(`https://image.tmdb.org/t/p/w${width}${url}`, {
+      method: 'GET',
+      mode: 'cors',
+    });
+    if (img.ok !== true) return `https://i.im.ge/2022/03/09/lyUsWa.png`;
+    if (img.status === 404) return `https://i.im.ge/2022/03/09/lyUsWa.png`;
 
-  return `https://image.tmdb.org/t/p/w${width}${url}`;
+    return `https://image.tmdb.org/t/p/w${width}${url}`;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const searchVideos = async (id, media) => {
+  try {
+    const x = await fetch(
+      `https://api.themoviedb.org/3/${media}/${id}?api_key=${API_KEY}&append_to_response=videos`
+    );
+    if (!x.ok) throw new Error('Bad url, please try again 📛');
+    if (x.status === 404) throw new Error('Page not found ❌');
+    // console.log(x);
+    const c = await x.json();
+    // console.log(c);
+    return c;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export {
@@ -99,4 +126,5 @@ export {
   searchByValue,
   searchTopRated,
   listOfGenres,
+  searchVideos,
 };
