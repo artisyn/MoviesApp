@@ -172,8 +172,6 @@ mediaTypeChange.forEach((media) => {
   });
 });
 
-const testImg = document.querySelector('.image');
-
 // cards related
 const getMediaTitle = (result) => {
   if (result.title) return result.title;
@@ -264,6 +262,7 @@ const fillSelectedCard = (cardInfo) => {
   const markup = `
   <div class="selected__container">
 					<div class="selected__poster">
+          <i class=" selected__favorite unfilled far fa-star"></i>
 						<img
 							class="selected__poster"
 							src="${posterUrl}"
@@ -271,6 +270,7 @@ const fillSelectedCard = (cardInfo) => {
 						/>
 					</div>
 					<div class="selected__info">
+          
 						<h3 class="selected__title">${title}</h3>
 						<div class="selected__date--genres">
 							<h2 class="selected__date">${date.slice(1, -1)}</h2>
@@ -331,8 +331,45 @@ const playTrailer = async (id, media) => {
   
   `;
   selectedCard.insertAdjacentHTML('afterbegin', markup);
+};
+const extractDataFromCard = (card) => {
+  let data = {
+    posterUrl: '',
+    title: '',
+    date: '',
+    text: '',
+    rating: '',
+    genres: '',
+    id: '',
+    mediaType: '',
+  };
+  const genres = [];
+  card.querySelectorAll('.selected__genre').forEach((genre) => {
+    genres.push(genre.innerText);
+  });
 
-  console.log(trailer[0].key);
+  data.posterUrl = card.querySelector('img').src;
+  data.title = card.querySelector('.selected__title').innerText;
+  data.date = card.querySelector('.selected__date').innerText;
+  data.text = card.querySelector('.selected__text').innerText;
+  data.rating = card.querySelector('.selected__rating-value').innerText;
+  data.genres = genres;
+  data.id = card.querySelector('.selected__play-btn').dataset.id;
+  data.mediaType = card.querySelector('.selected__play-btn').dataset.media;
+
+  return data;
+};
+
+const addToFavorites = (card) => {
+  const data = extractDataFromCard(card);
+  console.log(data);
+
+  localStorage.setItem(data.title, JSON.stringify(data));
+};
+const removeFromFavorites = (card) => {
+  const data = extractDataFromCard(card);
+  const x = JSON.parse(localStorage.getItem(data.title));
+  console.log(x);
 };
 
 selectedCard.addEventListener('click', (e) => {
@@ -344,12 +381,31 @@ selectedCard.addEventListener('click', (e) => {
   if (e.target === document.querySelector('.selected__trailer--close')) {
     e.target.closest('.trailer__container').remove();
   }
+
+  if (e.target.classList.contains('unfilled')) {
+    console.log('added to favorite');
+    const card = e.target.closest('.selected__card');
+    setTimeout(() => {
+      e.target.classList.remove('far', 'unfilled');
+      e.target.classList.add('fas', 'filled');
+      addToFavorites(card);
+    }, 100);
+  }
+
+  if (e.target.classList.contains('filled')) {
+    console.log('unfavorited');
+    const card = e.target.closest('.selected__card');
+    setTimeout(() => {
+      e.target.classList.remove('fas', 'filled');
+      e.target.classList.add('far', 'unfilled');
+      removeFromFavorites(card);
+    }, 100);
+  }
 });
 
 const showTrending = async () => {
   pageBtnContainer.classList.add('display__none');
   const { results } = await Request.searchTrending();
-  console.log(results);
   mainTitle.innerText = 'Trending Today';
   cardContainer.innerHTML = Spinner;
   await wait(1);
@@ -508,8 +564,7 @@ const showTopRated = async () => {
 // #TODO
 
 // add favorite to selected card
-// add footer
-// keep title always visible
+// same class on selected poster;
 
 // funcions on page start
 

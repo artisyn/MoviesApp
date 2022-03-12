@@ -575,6 +575,32 @@ ul li:nth-child(1):hover img {
 	cursor: pointer;
 }
 
+.selected__favorite {
+	position: absolute;
+	left: 1rem;
+	top: 1rem;
+	color: gold;
+	font-size: 2.5rem;
+	cursor: pointer;
+}
+
+.unfilled:hover::after {
+	content: 'Add to Favorites';
+	position: absolute;
+	color: rgb(253, 225, 67);
+	font-size: 1.5rem;
+	font-weight: bold;
+	right: -12rem;
+}
+.filled:hover::after {
+	content: 'Unfavorite';
+	position: absolute;
+	color: rgb(253, 225, 67);
+	font-size: 1.5rem;
+	font-weight: bold;
+	right: -12rem;
+}
+
 .title {
 	width: 100%;
 	text-align: center;
@@ -597,11 +623,14 @@ ul li:nth-child(1):hover img {
 	color: white;
 	position: relative;
 	overflow: hidden;
-	transition: all ease-in 0.5s;
+	transition: all ease-in 0.3s;
 	cursor: pointer;
 }
 .card:hover {
 	background-color: var(--left-slide);
+	box-shadow: 1px 1px 32px 3px rgba(73, 65, 203, 0.75);
+	-webkit-box-shadow: 1px 1px 32px 3px rgba(73, 65, 203, 0.75);
+	-moz-box-shadow: 1px 1px 32px 3px rgba(73, 65, 203, 0.75);
 }
 
 .card > img {
@@ -627,7 +656,7 @@ ul li:nth-child(1):hover img {
 }
 .card__title {
 	text-align: left;
-	margin: 0.4rem 0 0.4rem 0;
+	margin: 0.4rem 0 0.4rem 0.2rem;
 	max-height: 2.5rem;
 	overflow-y: scroll;
 	-ms-overflow-style: none; /* IE and Edge */
@@ -638,7 +667,7 @@ ul li:nth-child(1):hover img {
 }
 .card__date {
 	text-align: left;
-	margin: 0;
+	margin: 0 0 0 0.2rem;
 	font-size: 1.2rem;
 }
 .card__genres {
@@ -667,6 +696,16 @@ footer {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+.author {
+	color: #a098ec;
+	font-size: 2rem;
+}
+.author__name {
+	color: #c8c4f0;
+}
+.author__github {
+	margin-left: 1rem;
 }
 
 /* general styles */
