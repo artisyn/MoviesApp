@@ -26,6 +26,7 @@ const mainTitle = document.querySelector('.main__title');
 const footer = document.querySelector('footer');
 const footerBtn = document.querySelector('.footer__btn');
 const mainLogo = document.querySelector('.main__logo');
+const favoritesBtn = document.querySelector('.favorites__btn');
 
 let totalPages;
 let currentSearch = {
@@ -257,12 +258,16 @@ const fillSelectedCard = (cardInfo) => {
   const mediaType = cardInfo.dataset.media;
   const id = cardInfo.id;
 
+  const unfavorited =
+    '<i class=" selected__favorite unfilled far fa-star"></i>';
+  const favorited = '<i class=" selected__favorite filled fas fa-star"></i>';
+
   // console.log(title, date, text, genres, rating, posterUrl);
   clearSelectedCard();
   const markup = `
   <div class="selected__container">
 					<div class="selected__poster">
-          <i class=" selected__favorite unfilled far fa-star"></i>
+         ${localStorage.getItem(title) ? favorited : unfavorited}
 						<img
 							class="selected__poster"
 							src="${posterUrl}"
@@ -310,12 +315,8 @@ cardContainer.addEventListener('click', async (e) => {
 const playTrailer = async (id, media) => {
   const { videos } = await Request.searchVideos(id, media);
   const result = await Request.searchVideos(id, media);
-  // console.log(result);
   const trailer = videos.results.filter((video) => video.type === 'Trailer');
-  if (trailer.length === 0) {
-    console.log('no videos');
-    return;
-  }
+  if (trailer.length === 0) return;
 
   const markup = `
   <div class="trailer__container">
@@ -362,15 +363,57 @@ const extractDataFromCard = (card) => {
 
 const addToFavorites = (card) => {
   const data = extractDataFromCard(card);
-  console.log(data);
 
   localStorage.setItem(data.title, JSON.stringify(data));
 };
 const removeFromFavorites = (card) => {
   const data = extractDataFromCard(card);
-  const x = JSON.parse(localStorage.getItem(data.title));
-  console.log(x);
+  localStorage.removeItem(data.title);
+  showFavorites();
 };
+
+const convertFavoritesToCards = async (data) => {
+  const markup = `
+  <div class="card" id="${data.id}" data-media="${data.mediaType}">
+					<img
+						class="card__poster"
+						src="${data.posterUrl}"
+						alt="poster"
+					/>
+					<h3 class="card__title">${data.title}</h3>
+					<h2 class="card__date">(${data.date})</h2>
+
+					<div class="card__genres no__opacity">
+					${data.genres.reduce((accu, genre) => {
+            accu += `<div class="genres__color">${genre}</div>`;
+            return accu;
+          }, '')}
+					</div>
+
+					<p class="card__text no__opacity">
+						${data.text}
+					</p>
+					<div class="card__rating no__opacity">${data.rating}</div>
+				</div>
+  
+  `;
+
+  cardContainer.insertAdjacentHTML('beforeend', markup);
+};
+const showFavorites = async () => {
+  scrollToElementPlus(document.querySelector('.main__container'));
+  mainTitle.innerText = 'Your Favorite Media';
+  cardContainer.innerHTML = Spinner;
+  await wait(1);
+  cardContainer.innerHTML = '';
+  Object.keys(localStorage).forEach((key) => {
+    convertFavoritesToCards(JSON.parse(localStorage.getItem(key)));
+  });
+};
+
+favoritesBtn.addEventListener('click', async (e) => {
+  showFavorites();
+});
 
 selectedCard.addEventListener('click', (e) => {
   if (e.target === document.querySelector('.selected__play-btn')) {
@@ -383,7 +426,6 @@ selectedCard.addEventListener('click', (e) => {
   }
 
   if (e.target.classList.contains('unfilled')) {
-    console.log('added to favorite');
     const card = e.target.closest('.selected__card');
     setTimeout(() => {
       e.target.classList.remove('far', 'unfilled');
@@ -393,7 +435,6 @@ selectedCard.addEventListener('click', (e) => {
   }
 
   if (e.target.classList.contains('filled')) {
-    console.log('unfavorited');
     const card = e.target.closest('.selected__card');
     setTimeout(() => {
       e.target.classList.remove('fas', 'filled');
